@@ -1,6 +1,6 @@
 /* Your Code Here */
-const createEmployeeRecord = (empArray) => {
-    return {
+function createEmployeeRecord(empArray) {
+    const employee = {
         firstName: empArray[0],
         familyName: empArray[1],
         title: empArray[2],
@@ -8,6 +8,7 @@ const createEmployeeRecord = (empArray) => {
         timeInEvents: [],
         timeOutEvents: []
     }
+    return employee
 }
 
 const createEmployeeRecords = (empArrays) => {
@@ -40,14 +41,14 @@ const wagesEarnedOnDate = (employee, dateYMD) => {
 }
 
 const calculatePayroll = (records) => {
-    return records.reduce((memo, rec) => {
-        return memo + allWagesFor(rec)
+    return records.reduce((total, employee) => {
+        return total + allWagesFor(employee)
     }, 0)
 }
 
 const findEmployeeByFirstName = (srcArray, firstName) => {
-    return srcArray.find((rec) => {
-        return rec.firstName === firstName
+    return srcArray.find((employee) => {
+        return employee.firstName === firstName
     })
 }
 
@@ -60,8 +61,8 @@ const findEmployeeByFirstName = (srcArray, firstName) => {
  for you to use if you need it!
  */
 
-let allWagesFor = function () {
-    let eligibleDates = this.timeInEvents.map(function (e) {
+let allWagesFor = function (employee) {
+    let eligibleDates = employee.timeInEvents.map(function (e) {
         return e.date
     })
 
