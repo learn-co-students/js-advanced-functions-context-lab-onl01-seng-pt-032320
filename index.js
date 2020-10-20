@@ -11,8 +11,10 @@ function createEmployeeRecord(empArray) {
     return employee
 }
 
-const createEmployeeRecords = (empArrays) => {
-    return empArrays.map(createEmployeeRecord)
+const createEmployeeRecords = (employeeInfo => {
+    return employeeInfo.map((empArray) => {
+        return createEmployeeRecord(empArray)
+    }) 
 }
 
 const createDateOBJ = (getType, dateTime) => {
