@@ -11,42 +11,42 @@ function createEmployeeRecord(empArray) {
     return employee
 }
 
-const createEmployeeRecords = (empArrays) => {
+let createEmployeeRecords = (empArrays) => {
     return empArrays.map(createEmployeeRecord)
 }
 
-const createDateOBJ = (getType, dateTime) => {
+const createDateOBJ = function(getType, dateTime) {
     return {type: getType, date: dateTime.slice(0, 10), hour: parseInt(dateTime.slice(-4))}
 }
 
-const createTimeInEvent = (employee, dateTime) => {
-    employee.timeInEvents.push(createDateOBJ("TimeIn", dateTime))
-    return employee
+const createTimeInEvent = function(dateTime) {
+    this.timeInEvents.push(createDateOBJ("TimeIn", dateTime))
+    return this 
 }
 
-const createTimeOutEvent = (employee, dateTime) => {
-    employee.timeOutEvents.push(createDateOBJ("TimeOut", dateTime))
-    return employee
+const createTimeOutEvent = function(dateTime) {
+    this.timeOutEvents.push(createDateOBJ("TimeOut", dateTime))
+    return this
 }
 
-const hoursWorkedOnDate = (employee, dateYMD) => {
-    const timeIn = employee.timeInEvents.find((e) => e.date === dateYMD).hour
-    const timeOut = employee.timeOutEvents.find((e) => e.date === dateYMD).hour
-    return (timeOut - timeIn)/100
+const hoursWorkedOnDate = function(dateYMD) {
+    const timeIn = this.timeInEvents.find(e => e.date === dateYMD).hour
+    const timeOut = this.timeOutEvents.find(e => e.date === dateYMD).hour
+    return (timeOut - timeIn) / 100
 }
 
-const wagesEarnedOnDate = (employee, dateYMD) => {
+const wagesEarnedOnDate = function(employee, dateYMD) {
     const rawWage = hoursWorkedOnDate(employee, dateYMD) * employee.payPerHour
     return rawWage 
 }
 
-const calculatePayroll = (records) => {
-    return records.reduce((total, employee) => {
+const calculatePayroll = function(records) {
+    return records.reduce(function(total, employee) {
         return total + allWagesFor(employee)
     }, 0)
 }
 
-const findEmployeeByFirstName = (srcArray, firstName) => {
+const findEmployeeByFirstName = function(srcArray, firstName) {
     return srcArray.find((employee) => {
         return employee.firstName === firstName
     })
