@@ -29,11 +29,23 @@ const createTimeOutEvent = function(dateTime) {
     return this
 }
 
-const hoursWorkedOnDate = function(dateYMD) {
-    const timeIn = this.timeInEvents.find(e => e.date === dateYMD).hour
-    const timeOut = this.timeOutEvents.find(e => e.date === dateYMD).hour
-    return (timeOut - timeIn) / 100
+let hoursWorkedOnDate = function(soughtDate){
+    let inEvent = this.timeInEvents.find(function(e){
+        return e.date === soughtDate
+    })
+
+    let outEvent = this.timeOutEvents.find(function(e){
+        return e.date === soughtDate
+    })
+
+    return (outEvent.hour - inEvent.hour) / 100
 }
+
+// const hoursWorkedOnDate = function(dateYMD) {
+//     const timeIn = this.timeInEvents.find(e => e.date === dateYMD).hour
+//     const timeOut = this.timeOutEvents.find(e => e.date === dateYMD).hour
+//     return (timeOut - timeIn) / 100
+// }
 
 const wagesEarnedOnDate = function(employee, dateYMD) {
     const rawWage = hoursWorkedOnDate(employee, dateYMD) * employee.payPerHour
