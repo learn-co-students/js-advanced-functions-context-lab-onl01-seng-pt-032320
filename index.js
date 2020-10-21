@@ -15,37 +15,61 @@ let createEmployeeRecords = (empArrays) => {
     return empArrays.map(createEmployeeRecord)
 }
 
-const createDateOBJ = function(getType, dateTime) {
-    return {type: getType, date: dateTime.slice(0, 10), hour: parseInt(dateTime.slice(-4))}
-}
+const createTimeInEvent = function(dateStamp) {
+    let date = dateStamp.split(" ")[0];
+    let hour = parseInt(dateStamp.split(" ")[1]);
 
-const createTimeInEvent = function(dateTime) {
-    this.timeInEvents.push(createDateOBJ("TimeIn", dateTime))
-    return this 
-}
-
-const createTimeOutEvent = function(dateTime) {
-    this.timeOutEvents.push(createDateOBJ("TimeOut", dateTime))
+    this['timeInEvents'].push({
+        type: 'TimeIn',
+        date: date,
+        hour: hour
+    })
     return this
 }
 
-let hoursWorkedOnDate = function(soughtDate){
-    let inEvent = this.timeInEvents.find(function(e){
-        return e.date === soughtDate
-    })
+const createTimeOutEvent = function (dateStamp) {
+    let date = dateStamp.split(" ")[0];
+    let hour = parseInt(dateStamp.split(" ")[1]);
 
-    let outEvent = this.timeOutEvents.find(function(e){
-        return e.date === soughtDate
+    this['timeOutEvents'].push({
+        type: 'TimeOut',
+        date: date,
+        hour: hour
     })
-
-    return (outEvent.hour - inEvent.hour) / 100
+    return this
 }
 
-// const hoursWorkedOnDate = function(dateYMD) {
-//     const timeIn = this.timeInEvents.find(e => e.date === dateYMD).hour
-//     const timeOut = this.timeOutEvents.find(e => e.date === dateYMD).hour
-//     return (timeOut - timeIn) / 100
+// const createDateOBJ = function(getType, dateTime) {
+//     return {type: getType, date: dateTime.slice(0, 10), hour: parseInt(dateTime.slice(-4))}
 // }
+
+// const createTimeInEvent = function(dateTime) {
+//     this.timeInEvents.push(createDateOBJ("TimeIn", dateTime))
+//     return this 
+// }
+
+// const createTimeOutEvent = function(dateTime) {
+//     this.timeOutEvents.push(createDateOBJ("TimeOut", dateTime))
+//     return this
+// }
+
+// let hoursWorkedOnDate = function(soughtDate){
+//     let inEvent = this.timeInEvents.find(function(e){
+//         return e.date === soughtDate
+//     })
+
+//     let outEvent = this.timeOutEvents.find(function(e){
+//         return e.date === soughtDate
+//     })
+
+//     return (outEvent.hour - inEvent.hour) / 100
+// }
+
+const hoursWorkedOnDate = function(dateYMD) {
+    const timeIn = this.timeInEvents.find(e => e.date === dateYMD).hour
+    const timeOut = this.timeOutEvents.find(e => e.date === dateYMD).hour
+    return (timeOut - timeIn) / 100
+}
 
 const wagesEarnedOnDate = function(employee, dateYMD) {
     const rawWage = hoursWorkedOnDate(employee, dateYMD) * employee.payPerHour
